@@ -16,12 +16,17 @@ def phone(self,phone):
     if not p.match(phone.data):
         raise ValidationError('Must contain only digits from 0-9 in the form XXXX-XXX-XXXX')
 
+def password(self, password):
+    p = re.compile(r'(?=.*\d)(?=.[A-Z])(?=.[a-z])')
+    if not p.match(password.data):
+        raise ValidationError('Password must contain 1 digit, one lowercase letter and one uppercase letter')
+
 
 class RegisterForm(FlaskForm):
     email = EmailField(validators=[InputRequired(),Email('Please enter a valid email address')])
     firstname = StringField(validators=[InputRequired(),fname_lname_check])
     lastname = StringField(validators=[InputRequired(),fname_lname_check])
     phone = StringField(validators=[InputRequired(), phone])
-    password = PasswordField()
+    password = PasswordField(validators=[InputRequired(), Length(min=6, max=12),password])
     confirm_password = PasswordField()
     submit = SubmitField()
