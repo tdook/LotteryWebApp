@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\tdook\PycharmProjects\LotteryWebApp\instance\lottery.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="lottery [2]" uuid="bf1d3e07-3f45-497b-985c-5930a986f40a">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\Toby\Documents\Uni\Year 1\Comp Sci\CSC1034\PyCharmProjects\LotteryWebApp\instance\lottery.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -4,6 +4,7 @@ from app import db
 from models import User
 from users.forms import RegisterForm
 
+
 # CONFIG
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
 
