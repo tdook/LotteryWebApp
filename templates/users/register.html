@@ -30,11 +30,17 @@
                     <div class="control">
                         {{ form.lastname(class="input", placeholder="Last Name") }}
                     </div>
+                    {% for error in form.firstname.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
                 </div>
                 <div class="field">
                     <div class="control">
                         {{ form.phone(class="input", placeholder="Phone") }}
                     </div>
+                    {% for error in form.phone.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
                 </div>
                 <div class="field">
                     <div class="control">
