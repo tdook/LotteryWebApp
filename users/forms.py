@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField
-from wtforms.validators import InputRequired, Email, ValidationError, Length
+from wtforms.validators import InputRequired, Email, ValidationError, Length, EqualTo, DataRequired
 import re
+from flask import redirect, url_for
 
 
 def fname_lname_check (form, field):
@@ -17,9 +18,10 @@ def phone(self,phone):
         raise ValidationError('Must contain only digits from 0-9 in the form XXXX-XXX-XXXX')
 
 def password(self, password):
-    p = re.compile(r'(?=.*\d)(?=.[A-Z])(?=.[a-z])')
+    p = re.compile(r'(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)')
     if not p.match(password.data):
-        raise ValidationError('Password must contain 1 digit, one lowercase letter and one uppercase letter')
+        raise ValidationError('Password must contain 1 digit, one lowercase letter and one uppercase letter and one symbol')
+
 
 
 class RegisterForm(FlaskForm):
@@ -27,6 +29,12 @@ class RegisterForm(FlaskForm):
     firstname = StringField(validators=[InputRequired(),fname_lname_check])
     lastname = StringField(validators=[InputRequired(),fname_lname_check])
     phone = StringField(validators=[InputRequired(), phone])
-    password = PasswordField(validators=[InputRequired(), Length(min=6, max=12),password])
-    confirm_password = PasswordField()
+    password = PasswordField(validators=[InputRequired(), Length(min=6, max=12)])
+    confirm_password = PasswordField(validators=[InputRequired(),EqualTo('password',message='Both password fields must be equal')])
+    submit = SubmitField()
+
+
+class LoginForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Email()])
+    password = PasswordField(validators=[DataRequired()])
     submit = SubmitField()

@@ -30,7 +30,7 @@
                     <div class="control">
                         {{ form.lastname(class="input", placeholder="Last Name") }}
                     </div>
-                    {% for error in form.firstname.errors %}
+                    {% for error in form.lastname.errors %}
                         <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
                 </div>
@@ -54,7 +54,9 @@
                     <div class="control">
                         {{ form.confirm_password(class="input", placeholder="Confirm Password") }}
                     </div>
-
+                    {% for error in form.confirm_password.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
                 </div>
                 <div>
                     {{ form.submit(class="button is-info is-centered") }}
