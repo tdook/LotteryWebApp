@@ -1,8 +1,19 @@
+import pyotp
+
 from app import db, app
 from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin):
+    def get_2fa_uri(self):
+        return str(pyotp.totp.TOTP(self.pinkey).provisioning_uri(
+            name=self.email,
+
+            issuer_name='Lottery App')
+        )
+
+    def verify_pin(self,pin):
+        return pyotp(self.pin_key).verify(pin)
     def verify_password(self, password):
         return self.password == password
     __tablename__ = 'users'
@@ -18,17 +29,21 @@ class User(db.Model, UserMixin):
     lastname = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
     role = db.Column(db.String(100), nullable=False, default='user')
+    pin_key = db.Column(db.String(32),nullable=False, default=pyotp.random_base32())
 
     # Define the relationship to Draw
     draws = db.relationship('Draw')
 
-    def __init__(self, email, firstname, lastname, phone, password, role):
+    def __init__(self, email, firstname, lastname, phone, password, role ):
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
         self.phone = phone
         self.password = password
         self.role = role
+
+
+
 
 
 
@@ -75,5 +90,8 @@ def init_db():
                      phone='0191-123-4567',
                      role='admin')
 
+
         db.session.add(admin)
         db.session.commit()
+
+init_db()

@@ -41,31 +41,27 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        session['username'] = new_user.username
+        session['username'] = new_user.email
         return redirect(url_for('users.twofa'))
     # if request method is GET or form not valid re-render signup page
     return render_template('users/register.html', form=form)
 
 @users_blueprint.route('/twofa')
 def twofa():
+  # User user = User.query.get(role)
 
     if 'username' not in session:
         return redirect(url_for('main.index'))
 
     del session['username']
-    return render_template('users/twofa.html', username=user.username, uri=user.get_2fa_uri())
+    return render_template('users/twofa.html', username= User.email, uri=User.get_2fa_uri)
     200, {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
         'Expires': '0'
     }
 
-def get_2fa_uri(self):
-    return str(pyotp.totp.TOTP(self.pin_key).provisioning_uri(
-        name=self.username,
 
-        issuer_name='Lottery App')
-    )
 # view user login
 
 
@@ -74,7 +70,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.username.data).first()
-        if not user or not user.verify_password(form.password.data):
+        if not user or not user.verify_pin(form.pin.data) or not user.verify_password(form.password.data):
             flash('Unsuccessful login','danger')
 
             return render_template('users/login.html', form=form)
