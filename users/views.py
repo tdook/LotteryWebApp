@@ -1,10 +1,11 @@
 # IMPORTS
 import pyotp as pyotp
 from flask import Blueprint, render_template, flash, redirect, url_for, session
+from flask_wtf import form
 from markupsafe import Markup
 from sqlalchemy.sql.functions import user
 from werkzeug.security import check_password_hash
-
+from flask_login import current_user
 from app import db
 from models import User
 from users.forms import RegisterForm, LoginForm
@@ -105,4 +106,4 @@ def account():
                            phone="PLACEHOLDER FOR USER PHONE")
 
 
-new_
+new_post = Post(username = current_user.username, title= form.title.data, body=form.body.data)
