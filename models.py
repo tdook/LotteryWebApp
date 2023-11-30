@@ -12,8 +12,8 @@ class User(db.Model, UserMixin):
             issuer_name='Lottery App')
         )
 
-    def verify_pin(self,pin):
-        return pyotp(self.pin_key).verify(pin)
+ #   def verify_pin(self,pin):
+  #      return pyotp.TOTP(self.pin_key).verify(pin)
     def verify_password(self, password):
         return self.password == password
     __tablename__ = 'users'

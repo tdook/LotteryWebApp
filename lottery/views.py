@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app import db
 from lottery.forms import DrawForm
 from models import Draw
+from flask_login import current_user, login_required
 
 # CONFIG
 lottery_blueprint = Blueprint('lottery', __name__, template_folder='templates')
@@ -11,8 +12,9 @@ lottery_blueprint = Blueprint('lottery', __name__, template_folder='templates')
 # VIEWS
 # view lottery page
 @lottery_blueprint.route('/lottery')
+@login_required
 def lottery():
-    return render_template('lottery/lottery.html', name="PLACEHOLDER FOR FIRSTNAME")
+    return render_template('lottery/lottery.html', name=current_user.firstname)
 
 
 # view all draws that have not been played

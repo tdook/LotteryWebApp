@@ -1,11 +1,11 @@
 # IMPORTS
 import pyotp as pyotp
-from flask import Blueprint, render_template, flash, redirect, url_for, session
+from flask import Blueprint, render_template, flash, redirect, url_for, session, make_response
 from flask_wtf import form
 from markupsafe import Markup
 from sqlalchemy.sql.functions import user
 from werkzeug.security import check_password_hash
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app import db
 from models import User
 from users.forms import RegisterForm, LoginForm
@@ -48,62 +48,70 @@ def register():
     # if request method is GET or form not valid re-render signup page
     return render_template('users/register.html', form=form)
 
+
 @users_blueprint.route('/twofa')
 def twofa():
-  # User user = User.query.get(role)
+    # User user = User.query.get(role)
 
     if 'username' not in session:
         return redirect(url_for('main.index'))
 
     del session['username']
-    return render_template('users/twofa.html', username= User.email, uri=User.get_2fa_uri),
-    200, {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-    }
+
+    # Create a Flask response object using make_response
+    response = make_response(render_template('users/twofa.html', username=User.email, uri=User.get_2fa_uri))
+
+    # Set headers for caching
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+
+    # Return the response object
+    return response
 
 
 # view user login
 
 
-@users_blueprint.route('/login',methods=['GET','POST'])
+@users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    if not session.get('authentication_attempts'):
-        session['authentication_attempts'] = 0
+    # if not session.get('authentication_attempts'):
+    #  session['authentication_attempts'] = 0
 
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.username.data).first()
-        if not user or not user.verify_pin(form.pin.data) or not user.verify_password(form.password.data):
-            session['authentication_attempts'] += 1
-            if session.get('authentication_attempts') >= 3:
-                flash(Markup('Number of login attempts exceeded. Please click <a href="/reset>here</a> to reset.'))
-                return render_template('users/login.html')
-            flash('Unsuccessful login, please try again '
-                  '{} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
+        if not user or not user.verify_password(form.password.data):  # or not user.verify_pin(form.pin.data)
+            #    session['authentication_attempts'] += 1
+            #   print("attempted login"+ str(session['authentication_attempts']))
+            #  if session.get('authentication_attempts') >= 3:
+            #     flash(Markup('Number of login attempts exceeded. Please click <a href="/reset>here</a> to reset.'))
+            #     return render_template('users/login.html')
 
-
+            flash('Unsuccessful login, please try again ')
             return render_template('users/login.html', form=form)
-        else:
-            flash('Login Successful' )
-            return redirect(url_for('index'))
-            # Passwords match, login
+            # '{} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
 
-
+    #     return render_template('users/login.html', form=form)
+    # else:
+    #   flash('Login Successful' )
+    #   return redirect(url_for('index'))
+    # Passwords match, login
+    else:
+        return url_for('index')
 
     return render_template('users/login.html', form=form)
 
 
 # view user account
 @users_blueprint.route('/account')
+@login_required
 def account():
     return render_template('users/account.html',
                            acc_no="PLACEHOLDER FOR USER ID",
                            email="PLACEHOLDER FOR USER EMAIL",
-                           firstname="PLACEHOLDER FOR USER FIRSTNAME",
+                           firstname=current_user.firstname,
                            lastname="PLACEHOLDER FOR USER LASTNAME",
                            phone="PLACEHOLDER FOR USER PHONE")
 
-
-new_post = Post(username = current_user.username, title= form.title.data, body=form.body.data)
+# new_post = User(email = current_user.email, title= form.title.data, body=form.body.data)
