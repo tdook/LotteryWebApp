@@ -80,7 +80,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
         if not user or not user.verify_password(form.password.data):  # or not user.verify_pin(form.pin.data)
             #    session['authentication_attempts'] += 1
             #   print("attempted login"+ str(session['authentication_attempts']))
@@ -91,26 +91,28 @@ def login():
             flash('Unsuccessful login, please try again ')
             return render_template('users/login.html', form=form)
             # '{} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
+        else:
+            return redirect(url_for('index'))
 
     #     return render_template('users/login.html', form=form)
     # else:
     #   flash('Login Successful' )
     #   return redirect(url_for('index'))
     # Passwords match, login
-    else:
-        return url_for('index')
+   # else:
+       # return redirect(url_for('index'))
 
     return render_template('users/login.html', form=form)
 
 
 # view user account
 @users_blueprint.route('/account')
-@login_required
+#@login_required
 def account():
     return render_template('users/account.html',
                            acc_no="PLACEHOLDER FOR USER ID",
                            email="PLACEHOLDER FOR USER EMAIL",
-                           firstname=current_user.firstname,
+                           firstname="PLACEHOLDER FOR USER FIRSTNAME",
                            lastname="PLACEHOLDER FOR USER LASTNAME",
                            phone="PLACEHOLDER FOR USER PHONE")
 

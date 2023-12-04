@@ -17,8 +17,8 @@
     <div class="field">
         {{ form.csrf_token() }}
         <div class="control">
-            {{ form.username(class="input", placeholder="Username - Email") }}
-            {% for error in form.username.errors %}
+            {{ form.email(class="input", placeholder="Username - Email") }}
+            {% for error in form.email.errors %}
                 {{ error }}
             {% endfor %}
         </div>
@@ -35,7 +35,7 @@
         <div class="control">
             {{ form.pin(class="input", placeholder="PIN") }}
     </div>
-    </div
+    </div>
     <div>
         {{ form.recaptcha }}
     </div>
