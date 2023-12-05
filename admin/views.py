@@ -1,8 +1,11 @@
 # IMPORTS
 import random
 from flask import Blueprint, render_template, flash, redirect, url_for
+from flask_login import current_user
+
 from app import db
 from models import User, Draw
+from users.views import requires_roles
 
 # CONFIG
 admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
@@ -11,8 +14,9 @@ admin_blueprint = Blueprint('admin', __name__, template_folder='templates')
 # VIEWS
 # view admin homepage
 @admin_blueprint.route('/admin')
+@requires_roles('admin')
 def admin():
-    return render_template('admin/admin.html', name="PLACEHOLDER FOR FIRSTNAME")
+    return render_template('admin/admin.html', name=current_user.firstname)
 
 
 # create a new winning draw

@@ -1,4 +1,7 @@
 # IMPORTS
+from datetime import datetime
+from functools import wraps
+
 import pyotp as pyotp
 from flask import Blueprint, render_template, flash, redirect, url_for, session, make_response
 from flask_wtf import form
@@ -51,12 +54,12 @@ def register():
 
 
 @users_blueprint.route('/twofa')
-@login_required
+
 def twofa():
     # User user = User.query.get(role)
 
     if 'username' not in session:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('index'))
 
     del session['username']
 
@@ -85,6 +88,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user)
+
+        current_user.current_login = datetime.now()
+        current_user.last_login = datetime.now()
+
         if not user: #or (not user.verify_password(form.password.data) or not user.verify_pin(form.pin.data)):  # or not user.verify_pin(form.pin.data)
                 print(session['authentication_attempts'])
                 session['authentication_attempts'] += 1
@@ -100,7 +107,13 @@ def login():
 
 
         else:
-            return redirect(url_for('index'))
+            if current_user.role == "user":
+                return redirect(url_for('lottery.lottery'))
+
+            else:
+                return redirect(url_for('admin.admin'))
+
+
 
     print("logged in ")
 
@@ -113,6 +126,7 @@ def reset():
 
 @users_blueprint.route('/logout')
 @login_required
+
 def logout():
     logout_user()
     return redirect(url_for('index'))
@@ -148,3 +162,13 @@ def account():
                            phone=current_user.phone)
 
 #new_post = User(email = current_user.email, title= form.title.data, body=form.body.data)
+
+def requires_roles(*roles):
+    def wrapper(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            if current_user.role not in roles:
+                return render_template('403.html')
+            return f(*args, **kwargs)
+        return wrapped
+    return wrapper
