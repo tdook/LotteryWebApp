@@ -5,10 +5,11 @@ from flask_wtf import form
 from markupsafe import Markup
 from sqlalchemy.sql.functions import user
 from werkzeug.security import check_password_hash
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, logout_user
 from app import db
 from models import User
-from users.forms import RegisterForm, LoginForm
+from users.forms import RegisterForm, LoginForm, PasswordForm
+from flask_login import login_user
 
 # CONFIG
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
@@ -50,6 +51,7 @@ def register():
 
 
 @users_blueprint.route('/twofa')
+@login_required
 def twofa():
     # User user = User.query.get(role)
 
@@ -75,45 +77,74 @@ def twofa():
 
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    # if not session.get('authentication_attempts'):
-    #  session['authentication_attempts'] = 0
+    if not session.get('authentication_attempts'):
+        session['authentication_attempts'] = 0
 
     form = LoginForm()
+    print("prior")
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if not user or not user.verify_password(form.password.data):  # or not user.verify_pin(form.pin.data)
-            #    session['authentication_attempts'] += 1
-            #   print("attempted login"+ str(session['authentication_attempts']))
-            #  if session.get('authentication_attempts') >= 3:
-            #     flash(Markup('Number of login attempts exceeded. Please click <a href="/reset>here</a> to reset.'))
-            #     return render_template('users/login.html')
+        login_user(user)
+        if not user: #or (not user.verify_password(form.password.data) or not user.verify_pin(form.pin.data)):  # or not user.verify_pin(form.pin.data)
+                print(session['authentication_attempts'])
+                session['authentication_attempts'] += 1
+                print("attempted login"+ str(session['authentication_attempts']))
+                if session.get('authentication_attempts') >= 3:
+                     flash(Markup('Number of login1 attempts exceeded. Please click <a href="/reset">here</a> to reset.'))
+                     return render_template('users/login.html')
 
-            flash('Unsuccessful login, please try again ')
-            return render_template('users/login.html', form=form)
-            # '{} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
+                flash('Unsuccessful login, please try again, {} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
+
+                return render_template('users/login.html', form=form)
+
+
+
         else:
             return redirect(url_for('index'))
 
-    #     return render_template('users/login.html', form=form)
-    # else:
-    #   flash('Login Successful' )
-    #   return redirect(url_for('index'))
-    # Passwords match, login
-   # else:
-       # return redirect(url_for('index'))
+    print("logged in ")
 
     return render_template('users/login.html', form=form)
 
+@users_blueprint.route('/reset')
+def reset():
+    session['authentication_attempts'] = 0
+    return redirect(url_for('users.login'))
+
+@users_blueprint.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
+@users_blueprint.route('/update_password', methods=['GET', 'POST'])
+def update_password():
+    form = PasswordForm()
+
+    if form.validate_on_submit():
+
+        # IF STATEMENT: check if current password entered by user does not match current password stored for user in the database.
+
+        # IF STATEMENT: check if new password entered by the user matches current password stored for user in the database.
+
+        current_user.password = form.new_password.data
+        db.session.commit()
+        flash('Password changed successfully')
+
+        return redirect(url_for('users.account'))
+
+    return render_template('users/update_password.html', form=form)
 
 # view user account
 @users_blueprint.route('/account')
-#@login_required
+@login_required
 def account():
     return render_template('users/account.html',
-                           acc_no="PLACEHOLDER FOR USER ID",
-                           email="PLACEHOLDER FOR USER EMAIL",
-                           firstname="PLACEHOLDER FOR USER FIRSTNAME",
-                           lastname="PLACEHOLDER FOR USER LASTNAME",
-                           phone="PLACEHOLDER FOR USER PHONE")
+                           acc_no=current_user.id,
+                           email=current_user.email,
+                           firstname=current_user.firstname,
+                           lastname=current_user.lastname,
+                           phone=current_user.phone)
 
-# new_post = User(email = current_user.email, title= form.title.data, body=form.body.data)
+#new_post = User(email = current_user.email, title= form.title.data, body=form.body.data)
