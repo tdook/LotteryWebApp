@@ -47,7 +47,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        session['username'] = new_user.email
+        session['email'] = new_user.email
         return redirect(url_for('users.twofa'))
     # if request method is GET or form not valid re-render signup page
     return render_template('users/register.html', form=form)
@@ -58,21 +58,30 @@ def register():
 def twofa():
     # User user = User.query.get(role)
 
-    if 'username' not in session:
+    if 'email' not in session:
         return redirect(url_for('index'))
 
-    del session['username']
+    #del session['username']
+    user = User.query.filter_by(email=session['email']).first()
+    if current_user.is_anonymous:
+        return render_template('users/twofa.html', username=user.email, uri=user.get_2fa_uri()), 200, {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
 
-    # Create a Flask response object using make_response
-    response = make_response(render_template('users/twofa.html', username=User.email, uri=User.get_2fa_uri))
+        }
 
-    # Set headers for caching
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-    response.headers['Expires'] = '0'
 
-    # Return the response object
-    return response
+
+
+
+
+   # response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+   # response.headers['Pragma'] = 'no-cache'
+   # response.headers['Expires'] = '0'
+
+   # # Return the response object
+  #  return response
 
 
 # view user login
@@ -92,7 +101,7 @@ def login():
         current_user.current_login = datetime.now()
         current_user.last_login = datetime.now()
 
-        if not user: #or (not user.verify_password(form.password.data) or not user.verify_pin(form.pin.data)):  # or not user.verify_pin(form.pin.data)
+        if not user or (not user.verify_password(form.password.data) or (not user.verify_pin(form.pin.data)) or (not user.verify_pin(form.pin.data))):
                 print(session['authentication_attempts'])
                 session['authentication_attempts'] += 1
                 print("attempted login"+ str(session['authentication_attempts']))

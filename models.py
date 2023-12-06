@@ -8,7 +8,7 @@ from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     def get_2fa_uri(self):
-        return str(pyotp.totp.TOTP(self.pinkey).provisioning_uri(
+        return str(pyotp.totp.TOTP(self.pin_key).provisioning_uri(
             name=self.email,
 
             issuer_name='Lottery App')
@@ -102,4 +102,4 @@ def init_db():
         db.session.add(admin)
         db.session.commit()
 
-init_db()
+#init_db()
