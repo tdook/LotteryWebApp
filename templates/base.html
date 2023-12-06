@@ -43,9 +43,11 @@
                             <a href="{{ url_for('lottery.lottery') }}" class="navbar-item">
                                 Lottery
                             </a>
+                                {% if current_user.role == 'admin' %}
                             <a href="{{ url_for('admin.admin') }}" class="navbar-item">
                                 Admin
                             </a>
+                                    {% endif %}
                             <a href="{{ url_for('users.account') }}" class="navbar-item">
                                 Account
                             </a>
