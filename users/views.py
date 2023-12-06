@@ -106,7 +106,7 @@ def login():
                 session['authentication_attempts'] += 1
                 print("attempted login"+ str(session['authentication_attempts']))
                 if session.get('authentication_attempts') >= 3:
-                     flash(Markup('Number of login1 attempts exceeded. Please click <a href="/reset">here</a> to reset.'))
+                     flash(Markup('Number of login attempts exceeded. Please click <a href="/reset">here</a> to reset.'))
                      return render_template('users/login.html')
 
                 flash('Unsuccessful login, please try again, {} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
