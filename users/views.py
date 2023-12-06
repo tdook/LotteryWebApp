@@ -70,6 +70,8 @@ def twofa():
             'Expires': '0'
 
         }
+    else:
+        return redirect(url_for('index'))
 
 
 

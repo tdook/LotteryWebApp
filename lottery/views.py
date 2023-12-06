@@ -16,6 +16,8 @@ lottery_blueprint = Blueprint('lottery', __name__, template_folder='templates')
 @login_required
 @requires_roles('user')
 def lottery():
+    if current_user.role == 'admim':
+        redirect(url_for('index'))
     return render_template('lottery/lottery.html', name=current_user.firstname)
 
 
