@@ -52,7 +52,7 @@ def internal_server(error):
 
 @app.errorhandler(403)
 def forbidden():
-    print('log test')
+    print('403 accessed')
     logging.warning('SECURITY - unauthorised access attempt [%s, %s',
                     current_user.email,
                     request.remote_addr)
