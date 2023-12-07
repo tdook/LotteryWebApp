@@ -35,6 +35,7 @@
                             <a href="{{ url_for('users.register') }}" class="navbar-item">
                                 Register
                             </a>
+
                             <a href="{{ url_for('users.login') }}" class="navbar-item">
                                 Login
                             </a>
@@ -55,12 +56,14 @@
                             <a href="{{ url_for('users.account') }}" class="navbar-item">
                                 Account
                             </a>
+                            {% if current_user.is_authenticated %}
+
 
                             {#TODO: LOGOUT#}
                             <a href="{{ url_for('users.logout')}}" class="navbar-item">
                                 Logout
                             </a>
-
+                            {% endif %}
 
 
 

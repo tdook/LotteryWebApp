@@ -1,9 +1,10 @@
 # IMPORTS
+import logging
 from datetime import datetime
 from functools import wraps
 
 import pyotp as pyotp
-from flask import Blueprint, render_template, flash, redirect, url_for, session, make_response
+from flask import Blueprint, render_template, flash, redirect, url_for, session, make_response, request
 from flask_wtf import form
 from markupsafe import Markup
 from sqlalchemy.sql.functions import user
@@ -46,6 +47,9 @@ def register():
         # add the new user to the database
         db.session.add(new_user)
         db.session.commit()
+        logging.warning('SECURITY - User registration [%s, %s]',
+                        form.email.data,
+                        request.remote_addr)
 
         session['email'] = new_user.email
         return redirect(url_for('users.twofa'))
@@ -99,9 +103,14 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user)
-
+        print("current logged")
         current_user.current_login = datetime.now()
         current_user.last_login = datetime.now()
+        db.session.commit()
+        logging.warning('SECURITY - Log in [%s, %s, %s',
+                        current_user.id,
+                        current_user.email,
+                        request.remote_addr)
 
         if not user or (not user.verify_password(form.password.data) or (not user.verify_pin(form.pin.data)) or (not user.verify_pin(form.pin.data))):
                 print(session['authentication_attempts'])
@@ -112,7 +121,9 @@ def login():
                      return render_template('users/login.html')
 
                 flash('Unsuccessful login, please try again, {} login attempts remaining'.format(3-session.get('authentication_attempts')),'danger')
-
+                logging.warning('SECURITY - Failed Login attempt [%s, %s',
+                                current_user.email,
+                                request.remote_addr)
                 return render_template('users/login.html', form=form)
 
 
@@ -139,7 +150,12 @@ def reset():
 @login_required
 
 def logout():
+    logging.warning('SECURITY - Logout [%s, %s, %s',
+                    current_user.id,
+                    current_user.email,
+                    request.remote_addr)
     logout_user()
+
     return redirect(url_for('index'))
 
 

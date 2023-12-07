@@ -1,6 +1,8 @@
 # IMPORTS
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app import db
+
+import app
+from app import db, forbidden
 from users.views import requires_roles
 from lottery.forms import DrawForm
 from models import Draw
@@ -14,10 +16,11 @@ lottery_blueprint = Blueprint('lottery', __name__, template_folder='templates')
 # view lottery page
 @lottery_blueprint.route('/lottery')
 @login_required
-@requires_roles('user')
+#@requires_roles('user')
 def lottery():
-    if current_user.role == 'admim':
-        redirect(url_for('index'))
+    if current_user.role == 'admin':
+        print('======================================================')
+        return app.forbidden()
     return render_template('lottery/lottery.html', name=current_user.firstname)
 
 
