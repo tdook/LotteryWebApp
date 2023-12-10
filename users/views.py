@@ -166,9 +166,17 @@ def update_password():
     if form.validate_on_submit():
 
         # IF STATEMENT: check if current password entered by user does not match current password stored for user in the database.
+        if(current_user.password != form.current_password.data):
+            flash('Unsuccessful password change, please try again.','danger')
+            #return redirect(url_for('users.account'))
+            return render_template('users/update_password.html', form=form)
+
 
         # IF STATEMENT: check if new password entered by the user matches current password stored for user in the database.
-
+        if(current_user.password == form.new_password.data):
+            flash('New password cannot be the same as old password', 'danger')
+            #return redirect(url_for('users.account'))
+            return render_template('users/update_password.html', form=form)
         current_user.password = form.new_password.data
         db.session.commit()
         flash('Password changed successfully')

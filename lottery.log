@@ -19,3 +19,10 @@
 12/07/2023 06:31:30 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
 12/07/2023 06:32:15 PM : SECURITY - Log in [3, game@email.com, 127.0.0.1
 12/07/2023 06:32:46 PM : SECURITY - Log in [3, game@email.com, 127.0.0.1
+12/09/2023 03:13:45 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/09/2023 03:25:55 PM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/09/2023 03:27:06 PM : SECURITY - User registration [dook@gmail.com, 127.0.0.1]
+12/09/2023 03:36:19 PM : SECURITY - User registration [dook@gmail.com, 127.0.0.1]
+12/09/2023 03:37:06 PM : SECURITY - Log in [4, dook@gmail.com, 127.0.0.1
+12/10/2023 02:55:47 PM : SECURITY - Logout [4, dook@gmail.com, 127.0.0.1
+12/10/2023 02:56:18 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
