@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pyotp
+from cryptography.fernet import Fernet
 
 from app import db, app
 from flask_login import UserMixin
@@ -35,11 +36,12 @@ class User(db.Model, UserMixin):
     registered_on = db.Column(db.DateTime, nullable=False)
     current_login = db.Column(db.DateTime, nullable=True)
     last_login = db.Column(db.DateTime, nullable=True)
+    post_key = db.Column(db.BLOB, nullable=False, default=Fernet.generate_key())
 
     # Define the relationship to Draw
     draws = db.relationship('Draw')
 
-    def __init__(self, email, firstname, lastname, phone, password, role ):
+    def __init__(self, email, firstname, lastname, phone, password, role):
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
@@ -49,6 +51,8 @@ class User(db.Model, UserMixin):
         self.registered_on = datetime.now()
         self.current_login = None
         self.last_login = None
+
+
 
 
 
@@ -78,13 +82,14 @@ class Draw(db.Model):
     # Lottery round that draw is used
     lottery_round = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, user_id, numbers, master_draw, lottery_round):
+    def __init__(self, user_id, numbers, master_draw, lottery_round, post_key):
         self.user_id = user_id
         self.numbers = numbers
         self.been_played = False
         self.matches_master = False
         self.master_draw = master_draw
         self.lottery_round = lottery_round
+        self.post_key = post_key
 
 
 def init_db():
@@ -102,4 +107,15 @@ def init_db():
         db.session.add(admin)
         db.session.commit()
 
-#init_db()
+
+    def view_post(self, post_key):
+        self.title = decrypt(self.title, post_key)
+        self.body = decrypt(self)
+
+
+def encrypt(data, post_key):
+    return Fernet(post_key).encrypt(bytes(data, 'utf-8'))
+
+def decrypt(data, post_key):
+    return Fernet(post_key).decrypt(data).decode('utf-8')
+

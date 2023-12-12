@@ -129,4 +129,49 @@
     </div>
 
 
+<div class="column is-10 is-offset-1">
+
+
+    <h4 class="title is-4">User Activity Logs</h4>
+    <div class="box">
+        {% if current_user_activity %}
+            <div class="field">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Registered</th>
+                        <th>Current Log In</th>
+                        <th>Last Log In</th>
+
+                    </tr>
+                    {% for user in current_user_activity %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+
+
+                            <td>{{ user.role }}</td>
+                                <td>{{ user.registered_on.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                {% if user.current_login %}
+                                    <td>{{ user.current_login.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                    <td>{{ user.last_login.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                {% else %}
+                                    <td>Not yet logged in</td>
+                                {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+        <form action="/view_user_activity">
+            <div>
+                <button class="button is-info is-centered">View User Activity</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 {% endblock %}

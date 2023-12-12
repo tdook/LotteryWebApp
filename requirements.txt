@@ -8,3 +8,4 @@ email_validator
 flask-qrcode
 SQLAlchemy
 pyotp
+cryptography

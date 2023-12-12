@@ -5,8 +5,10 @@ import app
 from app import db, forbidden
 from users.views import requires_roles
 from lottery.forms import DrawForm
-from models import Draw
+from models import Draw, decrypt, encrypt
 from flask_login import current_user, login_required
+from sqlalchemy.orm import make_transient
+
 
 # CONFIG
 lottery_blueprint = Blueprint('lottery', __name__, template_folder='templates')
@@ -36,8 +38,11 @@ def create_draw():
                           + str(form.number4.data) + ' '
                           + str(form.number5.data) + ' '
                           + str(form.number6.data))
+
+        encrypted_numbers = encrypt(submitted_numbers, current_user.post_key)
+
         # create a new draw with the form data.
-        new_draw = Draw(user_id=current_user.id, numbers=submitted_numbers, master_draw=False, lottery_round=0)
+        new_draw = Draw(user_id=current_user.id, numbers=encrypted_numbers, master_draw=False, lottery_round=0,post_key=current_user.post_key)
         # add the new draw to the database
         db.session.add(new_draw)
         db.session.commit()
@@ -55,8 +60,13 @@ def view_draws():
     # get all draws that have not been played [played=0]
     playable_draws = Draw.query.filter_by(been_played=False,user_id=current_user.id).all() #.with_entities(Draw.numbers).all()
 
+
     # if playable draws exist
     if len(playable_draws) != 0:
+
+        for draw in playable_draws:
+            draw.numbers= decrypt(draw.numbers, current_user.post_key)
+
         # re-render lottery page with playable draws
         return render_template('lottery/lottery.html', playable_draws=playable_draws)
     else:
