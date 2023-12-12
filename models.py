@@ -116,6 +116,34 @@ def init_db():
 def encrypt(data, post_key):
     return Fernet(post_key).encrypt(bytes(data, 'utf-8'))
 
-def decrypt(data, post_key):
-    return Fernet(post_key).decrypt(data).decode('utf-8')
+#def decrypt(data, post_key):
+ #   return Fernet(post_key).decrypt(data).decode('utf-8')
 
+def decrypt_draws(draws):
+    decrypted_draws = []
+
+    for draw in draws:
+        try:
+            # Fetch the user's post_key from the database
+            user = User.query.filter_by(id=draw.user_id).first()
+
+            # Check if the user and post_key are found
+            if user and user.post_key:
+                # Decrypt the draw using the user's post_key
+                decrypted_numbers = Fernet(user.post_key).decrypt(draw.numbers).decode('utf-8')
+
+                # Append the decrypted draw to the list
+                decrypted_draws.append((draw.id, decrypted_numbers))
+            else:
+                # Handle the case where user or post_key is not found
+                print(f"User or post_key not found for draw {draw.id}")
+
+        except Exception as e:
+            # Handle decryption errors
+            print(f"Error decrypting draw {draw.id}: {e}")
+
+    return decrypted_draws
+
+# Example usage:
+user_draws = Draw.query.filter_by(master_draw=False, been_played=True).all()
+decrypted_user_draws = decrypt_draws(user_draws)

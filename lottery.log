@@ -30,3 +30,26 @@
 12/11/2023 03:49:02 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
 12/11/2023 05:06:38 PM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
 12/11/2023 07:05:52 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/12/2023 02:09:31 AM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/12/2023 02:10:04 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 02:25:38 PM : SECURITY - User registration [billy@gmail.com, 127.0.0.1]
+12/12/2023 02:26:25 PM : SECURITY - Log in [5, billy@gmail.com, 127.0.0.1
+12/12/2023 02:27:05 PM : SECURITY - Logout [5, billy@gmail.com, 127.0.0.1
+12/12/2023 02:27:20 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 02:28:19 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/12/2023 03:05:57 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 03:19:44 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/12/2023 03:20:05 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:20:54 PM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:21:36 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 03:31:09 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/12/2023 03:31:27 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:32:34 PM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:32:52 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 03:33:20 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/12/2023 03:34:23 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:35:12 PM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:35:39 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/12/2023 03:35:54 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/12/2023 03:36:20 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/12/2023 03:41:03 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
