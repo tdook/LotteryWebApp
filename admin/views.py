@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import current_user
 
 from app import db
-from models import User, Draw#, decrypt
+from models import User, Draw, decrypt
 from users.views import requires_roles
 
 # CONFIG
@@ -98,12 +98,18 @@ def run_lottery():
             db.session.add(current_winning_draw)
             db.session.commit()
 
-
             # for each unplayed user draw
             for draw in user_draws:
 
                 # get the owning user (instance/object)
                 user = User.query.filter_by(id=draw.user_id).first()
+
+                if user:
+                    user_post_key = user.post_key
+
+                    decrypted_numbers = decrypt(draw.numbers, user_post_key)
+                    draw.numbers = decrypted_numbers
+
 
                 # if user draw matches current unplayed winning draw
                 if draw.numbers == current_winning_draw.numbers:
