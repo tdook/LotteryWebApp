@@ -53,3 +53,34 @@
 12/12/2023 03:35:54 PM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
 12/12/2023 03:36:20 PM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
 12/12/2023 03:41:03 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:13:20 AM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/13/2023 03:13:42 AM : SECURITY - Log in [5, billy@gmail.com, 127.0.0.1
+12/13/2023 03:28:31 AM : SECURITY - Logout [5, billy@gmail.com, 127.0.0.1
+12/13/2023 03:28:48 AM : SECURITY - User registration [boombaclart@gmail.com, 127.0.0.1]
+12/13/2023 03:32:06 AM : SECURITY - Log in [6, boombaclart@gmail.com, 127.0.0.1
+12/13/2023 03:32:14 AM : SECURITY - Logout [6, boombaclart@gmail.com, 127.0.0.1
+12/13/2023 03:32:36 AM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/13/2023 03:33:13 AM : SECURITY - Logout [2, l@gmail.com, 127.0.0.1
+12/13/2023 03:33:38 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:42:31 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/13/2023 03:42:52 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:42:52 AM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/13/2023 03:48:52 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/13/2023 03:49:15 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:49:16 AM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/13/2023 03:49:47 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:49:47 AM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/13/2023 03:51:16 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 03:51:51 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/13/2023 03:52:17 AM : SECURITY - User registration [l@gmail.com, 127.0.0.1]
+12/13/2023 03:53:11 AM : SECURITY - Log in [2, l@gmail.com, 127.0.0.1
+12/13/2023 03:54:54 AM : SECURITY - User registration [rat@gmail.com, 127.0.0.1]
+12/13/2023 03:56:53 AM : SECURITY - User registration [boombaclart@gmail.com, 127.0.0.1]
+12/13/2023 03:58:40 AM : SECURITY - Logout [2, boombaclart@gmail.com, 127.0.0.1
+12/13/2023 03:59:16 AM : SECURITY - User registration [lol@gmail.com, 127.0.0.1]
+12/13/2023 04:06:40 AM : SECURITY - Log in [3, lol@gmail.com, 127.0.0.1
+12/13/2023 04:07:13 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 04:07:13 AM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/13/2023 04:07:42 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/13/2023 04:41:33 AM : SECURITY - Logout [3, lol@gmail.com, 127.0.0.1
+12/13/2023 04:42:15 AM : SECURITY - Log in [3, lol@gmail.com, 127.0.0.1

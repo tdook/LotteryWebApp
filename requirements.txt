@@ -9,3 +9,5 @@ flask-qrcode
 SQLAlchemy
 pyotp
 cryptography
+bcrypt
+Talisman

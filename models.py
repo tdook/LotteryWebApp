@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import bcrypt
 import pyotp
 from cryptography.fernet import Fernet
 
@@ -18,7 +19,7 @@ class User(db.Model, UserMixin):
     def verify_pin(self,pin):
         return pyotp.TOTP(self.pin_key).verify(pin)
     def verify_password(self, password):
-        return self.password == password
+        return bcrypt.checkpw(password.encode('utf-8'), self.password)
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +47,7 @@ class User(db.Model, UserMixin):
         self.firstname = firstname
         self.lastname = lastname
         self.phone = phone
-        self.password = password
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         self.role = role
         self.registered_on = datetime.now()
         self.current_login = None
@@ -96,6 +97,9 @@ def init_db():
     with app.app_context():
         db.drop_all()
         db.create_all()
+
+       # admin_hashed = bcrypt.hashpw('Admin1!'.encode('utf-8'), bcrypt.gensalt())
+      #  print(admin_hashed)
         admin = User(email='admin@email.com',
                      password='Admin1!',
                      firstname='Alice',
@@ -107,12 +111,12 @@ def init_db():
         db.session.add(admin)
         db.session.commit()
 
+#init_db()
+    #def view_post(self, post_key):
+     #   self.title = decrypt(self.title, post_key)
+      #  self.body = decrypt(self)
 
-    def view_post(self, post_key):
-        self.title = decrypt(self.title, post_key)
-        self.body = decrypt(self)
-
-
+#init_db()
 def encrypt(data, post_key):
     return Fernet(post_key).encrypt(bytes(data, 'utf-8'))
 

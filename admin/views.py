@@ -1,4 +1,5 @@
 # IMPORTS
+import math
 import random
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import current_user
@@ -40,10 +41,15 @@ def generate_winning_draw():
     # get new winning numbers for draw
     winning_numbers = random.sample(range(1, 60), 6)
     winning_numbers.sort()
+
+
+
     winning_numbers_string = ''
     for i in range(6):
         winning_numbers_string += str(winning_numbers[i]) + ' '
     winning_numbers_string = winning_numbers_string[:-1]
+
+
 
     # create a new draw object.
     new_winning_draw = Draw(user_id=1, numbers=winning_numbers_string, master_draw=True, lottery_round=lottery_round, post_key=current_user.post_key)

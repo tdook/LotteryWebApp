@@ -52,6 +52,7 @@ def register():
                         request.remote_addr)
 
         session['email'] = new_user.email
+        print("###############################################\n#####################################")
         return redirect(url_for('users.twofa'))
     # if request method is GET or form not valid re-render signup page
     return render_template('users/register.html', form=form)

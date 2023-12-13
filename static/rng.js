@@ -1,14 +1,20 @@
+
+
 // JavaScript function to generate 6 random unique values in order and populate form
 function luckyDip() {
 
     // create empty set
     let draw = new Set();
+    const min = 60;
+    const max = 60;
 
     // while set does not contain 6 values, create a random value between 1 and 60
     while (draw.size < 6) {
-        min = 1;
-        max = 60;
-        value = Math.ceil(Math.random() * (max - min) + min);
+        const randomBuffer = new Uint32Array(n);
+        window.crypto.getRandomValues(randomBuffer);
+        const csRandomNumber = randomBuffer[0] / (0xFFFFFFFF)
+
+        const value = Math.floor(csRandomNumber * (max - min + 1) + min);
 
         // sets cannot contain duplicates so value is only added if it does not exist in set
         draw.add(value)

@@ -31,6 +31,7 @@ def lottery():
 def create_draw():
     form = DrawForm()
 
+
     if form.validate_on_submit():
         submitted_numbers = (str(form.number1.data) + ' '
                           + str(form.number2.data) + ' '
@@ -38,6 +39,17 @@ def create_draw():
                           + str(form.number4.data) + ' '
                           + str(form.number5.data) + ' '
                           + str(form.number6.data))
+
+
+
+        numbers = [form.number1.data, form.number2.data, form.number3.data, form.number4.data, form.number5.data,
+                   form.number6.data]
+        form.sort_num()
+        print(form.data)
+        print("###########################\n#################")
+        if len(numbers) != len(set( numbers)):
+            flash('Numbers must be unique.')
+            return render_template('lottery/lottery.html', name=current_user.firstname, form=form)
 
         encrypted_numbers = encrypt(submitted_numbers, current_user.post_key)
 
