@@ -1,6 +1,7 @@
 # IMPORTS
 import os, logging
 
+
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_qrcode import QRcode
@@ -21,6 +22,7 @@ db = SQLAlchemy(app)
 qrcode = QRcode(app)
 
 
+#security logging
 class SecurityFilter(logging.Filter):
     def filter(self, record):
         return 'SECURITY' in record.getMessage()
@@ -41,7 +43,7 @@ logger.addHandler(file_handler)
 def index():
     return render_template('main/index.html')
 
-
+'''Error handlers all below'''
 @app.errorhandler(400)
 def bad_request(error):
     return render_template('errors/400.html'), 400
@@ -96,24 +98,29 @@ def load_user(id):
 
 
 csp = {
-    'default-src': ['\'self\'', 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css'],
+    'default-src': [
+'\'self\'',
+'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css'
+],
+
     'frame-src': [
-        '\'self\'',
-        'https://www.google.com/recaptcha/',
-        'https://recaptcha.google.com/recaptcha/'
-    ]
+'\'self\'',
+'https://www.google.com/recaptcha/',
+'https://recaptcha.google.com/recaptcha/'
+]
     ,
     'script-src': [
-        'self',
-        '\'unsafe-inline\'',
-        'https://www.google.com/recaptcha/',
-        'https://www.gstatic.com/recaptcha/'
-    ],
+'\'self\'',
+'\'unsafe-inline\'',
+'https://www.google.com/recaptcha/',
+'https://www.gstatic.com/recaptcha/'
+],
     'img-src': [
         'data:'
     ]
 }
 
+'''CSP IMPLEMENTED BUT UNCOMMENTING THE INITIALISATION LINE BELOW BREAKS THE THE LUCKY DIP FUNCTIONALITY'''
 #talisman = Talisman(app, content_security_policy=csp)
 
 if __name__ == "__main__":

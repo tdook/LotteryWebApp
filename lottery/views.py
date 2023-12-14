@@ -89,15 +89,11 @@ def view_draws():
 # view lottery results
 @lottery_blueprint.route('/check_draws', methods=['POST'])
 def check_draws():
-    # get played draws
-    played_draws = Draw.query.filter_by(been_played=True, user_id=current_user.id).all()
-   # print(type(played_draws))
-    # if played draws exist
-    if len(played_draws) != 0:
-      #  for draw in played_draws:
-          #  draw.numbers = decrypt(draw.numbers, current_user.post_key)
 
-      #  db.session.commit()
+    played_draws = Draw.query.filter_by(been_played=True, user_id=current_user.id).all()
+
+    if len(played_draws) != 0:
+
         return render_template('lottery/lottery.html', results=played_draws, played=True)
 
     # if no played draws exist [all draw entries have been played therefore wait for next lottery round]
@@ -109,7 +105,7 @@ def check_draws():
 # delete all played draws
 @lottery_blueprint.route('/play_again', methods=['POST'])
 def play_again():
-    Draw.query.filter_by(been_played=True, master_draw=False).delete(synchronize_session=False)
+    Draw.query.filter_by(been_played=True, master_draw=False, user_id=current_user.id).delete(synchronize_session=False)
     db.session.commit()
 
     flash("All played draws deleted.")

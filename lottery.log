@@ -98,3 +98,24 @@
 12/14/2023 02:33:25 AM : SECURITY - User registration [toby@gmail.com, 127.0.0.1]
 12/14/2023 02:33:37 AM : SECURITY - Logout [2, toby@gmail.com, 127.0.0.1
 12/14/2023 02:34:43 AM : SECURITY - User registration [toby@email.com, 127.0.0.1]
+12/14/2023 12:43:12 PM : SECURITY - Log in [2, toby@gmail.com, 127.0.0.1
+12/14/2023 12:43:12 PM : SECURITY - Failed Login attempt [toby@gmail.com, 127.0.0.1
+12/14/2023 12:43:24 PM : SECURITY - Log in [2, toby@gmail.com, 127.0.0.1
+12/14/2023 12:43:24 PM : SECURITY - Failed Login attempt [toby@gmail.com, 127.0.0.1
+12/14/2023 12:43:48 PM : SECURITY - Log in [3, toby@email.com, 127.0.0.1
+12/14/2023 12:45:19 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 12:45:19 PM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/14/2023 12:45:30 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 12:45:31 PM : SECURITY - Failed Login attempt [admin@email.com, 127.0.0.1
+12/14/2023 12:46:04 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 12:47:27 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 01:11:05 PM : SECURITY - Logout [3, toby@email.com, 127.0.0.1
+12/14/2023 01:11:26 PM : SECURITY - User registration [beans@gmail.com, 127.0.0.1]
+12/14/2023 01:12:09 PM : SECURITY - Log in [4, beans@gmail.com, 127.0.0.1
+12/14/2023 01:13:36 PM : SECURITY - Logout [4, beans@gmail.com, 127.0.0.1
+12/14/2023 01:14:03 PM : SECURITY - Log in [2, toby@gmail.com, 127.0.0.1
+12/14/2023 01:14:29 PM : SECURITY - Log in [3, toby@email.com, 127.0.0.1
+12/14/2023 02:18:57 PM : SECURITY - Log in [4, beans@gmail.com, 127.0.0.1
+12/14/2023 02:29:54 PM : SECURITY - Logout [3, toby@email.com, 127.0.0.1
+12/14/2023 02:30:24 PM : SECURITY - User registration [bean2@gmail.com, 127.0.0.1]
+12/14/2023 02:30:54 PM : SECURITY - Log in [5, bean2@gmail.com, 127.0.0.1

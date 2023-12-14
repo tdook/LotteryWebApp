@@ -9,6 +9,8 @@ from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin):
+
+    #get 2fa keys
     def get_2fa_uri(self):
         return str(pyotp.totp.TOTP(self.pin_key).provisioning_uri(
             name=self.email,
@@ -58,12 +60,6 @@ class User(db.Model, UserMixin):
         self.last_login = None
 
 
-
-
-
-
-
-
 class Draw(db.Model):
     __tablename__ = 'draws'
 
@@ -85,7 +81,7 @@ class Draw(db.Model):
     master_draw = db.Column(db.BOOLEAN, nullable=False)
 
     # Lottery round that draw is used
-    lottery_round = db.Column(db.Integer, nullable=False, default=0)
+    lottery_round = db.Column(db.Integer, nullable=False, default=1)
 
     def __init__(self, user_id, numbers, master_draw, lottery_round, post_key):
         self.user_id = user_id
@@ -102,8 +98,6 @@ def init_db():
         db.drop_all()
         db.create_all()
 
-        admin_hashed = bcrypt.hashpw('Admin1!'.encode('utf-8'), bcrypt.gensalt())
-      #  print(admin_hashed)
         admin = User(email='admin@email.com',
                      password='Admin1!',
                      firstname='Alice',
@@ -117,12 +111,8 @@ def init_db():
         db.session.add(admin)
         db.session.commit()
 
-#init_db()
-    #def view_post(self, post_key):
-     #   self.title = decrypt(self.title, post_key)
-      #  self.body = decrypt(self)
 
-#init_db()
+
 def encrypt(data, post_key):
     return Fernet(post_key).encrypt(bytes(data, 'utf-8'))
 

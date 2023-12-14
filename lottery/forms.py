@@ -12,6 +12,7 @@ class DrawForm(FlaskForm):
     number6 = IntegerField(id='no6', validators=[InputRequired(), NumberRange(min=1, max=60)])
     submit = SubmitField("Submit Draw")
 
+    #sorting function
     def sort_num(self):
         numbers = [self.number1.data, self.number2.data, self.number3.data, self.number4.data, self.number5.data,
                self.number6.data]

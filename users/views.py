@@ -197,9 +197,13 @@ def account():
                            email=current_user.email,
                            firstname=current_user.firstname,
                            lastname=current_user.lastname,
-                           phone=current_user.phone)
+                           phone=current_user.phone,
+                           dob=current_user.dob,
+                           postcode=current_user.postcode
 
-#new_post = User(email = current_user.email, title= form.title.data, body=form.body.data)
+                           )
+
+
 
 def requires_roles(*roles):
     def wrapper(f):
