@@ -91,11 +91,11 @@ def view_draws():
 def check_draws():
     # get played draws
     played_draws = Draw.query.filter_by(been_played=True, user_id=current_user.id).all()
-    print(type(played_draws))
+   # print(type(played_draws))
     # if played draws exist
     if len(played_draws) != 0:
-       # for draw in played_draws:
-         #   draw.numbers = decrypt(draw.numbers, current_user.post_key)
+      #  for draw in played_draws:
+          #  draw.numbers = decrypt(draw.numbers, current_user.post_key)
 
       #  db.session.commit()
         return render_template('lottery/lottery.html', results=played_draws, played=True)

@@ -84,3 +84,8 @@
 12/13/2023 04:07:42 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
 12/13/2023 04:41:33 AM : SECURITY - Logout [3, lol@gmail.com, 127.0.0.1
 12/13/2023 04:42:15 AM : SECURITY - Log in [3, lol@gmail.com, 127.0.0.1
+12/13/2023 06:41:57 PM : SECURITY - User registration [fdsfsfd@gmail.com, 127.0.0.1]
+12/13/2023 06:47:04 PM : SECURITY - Log in [4, fdsfsfd@gmail.com, 127.0.0.1
+12/13/2023 06:54:08 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 01:27:29 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/14/2023 01:28:45 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1

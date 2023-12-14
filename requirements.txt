@@ -10,4 +10,4 @@ SQLAlchemy
 pyotp
 cryptography
 bcrypt
-Talisman
+Flask-Talisman
