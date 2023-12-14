@@ -32,6 +32,8 @@ class User(db.Model, UserMixin):
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(100), nullable=False)
+    dob = db.Column(db.String(100), nullable=False)
+    postcode = db.Column(db.String(100), nullable=False)
     role = db.Column(db.String(100), nullable=False, default='user')
     pin_key = db.Column(db.String(32), nullable=False, default=pyotp.random_base32())
     registered_on = db.Column(db.DateTime, nullable=False)
@@ -42,12 +44,14 @@ class User(db.Model, UserMixin):
     # Define the relationship to Draw
     draws = db.relationship('Draw')
 
-    def __init__(self, email, firstname, lastname, phone, password, role):
+    def __init__(self, email, firstname, lastname, phone, dob, postcode, password, role):
         self.email = email
         self.firstname = firstname
         self.lastname = lastname
         self.phone = phone
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        self.dob = dob
+        self.postcode = postcode
         self.role = role
         self.registered_on = datetime.now()
         self.current_login = None
@@ -98,13 +102,15 @@ def init_db():
         db.drop_all()
         db.create_all()
 
-       # admin_hashed = bcrypt.hashpw('Admin1!'.encode('utf-8'), bcrypt.gensalt())
+        admin_hashed = bcrypt.hashpw('Admin1!'.encode('utf-8'), bcrypt.gensalt())
       #  print(admin_hashed)
         admin = User(email='admin@email.com',
                      password='Admin1!',
                      firstname='Alice',
                      lastname='Jones',
                      phone='0191-123-4567',
+                     dob='01/01/1970',
+                     postcode='NE4 5TG',
                      role='admin')
 
 

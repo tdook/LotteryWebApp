@@ -54,7 +54,7 @@ def create_draw():
         encrypted_numbers = encrypt(submitted_numbers, current_user.post_key)
 
         # create a new draw with the form data.
-        new_draw = Draw(user_id=current_user.id, numbers=encrypted_numbers, master_draw=False, lottery_round=0,post_key=current_user.post_key)
+        new_draw = Draw(user_id=current_user.id, numbers=encrypted_numbers, master_draw=False, lottery_round=1,post_key=current_user.post_key)
         # add the new draw to the database
         db.session.add(new_draw)
         db.session.commit()

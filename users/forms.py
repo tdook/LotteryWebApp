@@ -20,6 +20,19 @@ def phone(self,phone):
     if not p.match(phone.data):
         raise ValidationError('Must contain only digits from 0-9 in the form XXXX-XXX-XXXX')
 
+def dob_pattern(self,dob):
+    dobcheck = re.compile(r'^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/(19|20)\d{2}$')
+    if not dobcheck.match(dob.data):
+        raise ValidationError('Please ensure dob is in the correct format DD/MM/YYYY')
+
+def postcode_pattern(self,postcode):
+    #postcodecheck = re.compile(r'^[A-Z]\d [A-Z]{2}\d{2}$|^[A-Z]\d{2} [A-Z]{2}\d{2}$|^[A-Z]{2}\d [A-Z]{2}\d{2}$|^[A-Z]{2}\d[A-Z] \d{2}$')
+    postcodecheck = re.compile(
+        r'^[A-Z]\d\s?\d[A-Z]?|[A-Z]\d{2}\s?\d[A-Z]?|[A-Z]{2}\d\s?\d[A-Z]?|[A-Z]{2}\d[A-Z]\s?\d{2}$')
+
+   # postcodecheck = re.compile(r'^[A-Z]\d[A-Z]?\s?\d[A-Z]{2}$')
+    if not postcodecheck.match(postcode.data):
+        raise ValidationError('Postcode must be in form XY YXX, XYY YXX, or XXY YXX. (X as an uppercase letter, Y as a digit')
 def validate_password(self, password):
     p = re.compile(r'(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*\W)')
     if not p.match(password.data):
@@ -32,6 +45,8 @@ class RegisterForm(FlaskForm):
     firstname = StringField(validators=[InputRequired(),fname_lname_check])
     lastname = StringField(validators=[InputRequired(),fname_lname_check])
     phone = StringField(validators=[InputRequired(), phone])
+    dob = StringField(validators=[InputRequired(), dob_pattern])
+    postcode = StringField(validators=[InputRequired(), postcode_pattern])
     password = PasswordField(validators=[InputRequired(), Length(min=6, max=12), validate_password])
     confirm_password = PasswordField(validators=[InputRequired(),EqualTo('password',message='Both password fields must be equal')])
     submit = SubmitField()

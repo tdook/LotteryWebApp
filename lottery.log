@@ -89,3 +89,12 @@
 12/13/2023 06:54:08 PM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
 12/14/2023 01:27:29 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
 12/14/2023 01:28:45 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 01:54:50 AM : SECURITY - Logout [4, fdsfsfd@gmail.com, 127.0.0.1
+12/14/2023 01:59:34 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/14/2023 01:59:54 AM : SECURITY - Log in [1, admin@email.com, 127.0.0.1
+12/14/2023 02:02:17 AM : SECURITY - User registration [toby@gmail.com, 127.0.0.1]
+12/14/2023 02:11:26 AM : SECURITY - Log in [2, toby@gmail.com, 127.0.0.1
+12/14/2023 02:14:21 AM : SECURITY - Logout [1, admin@email.com, 127.0.0.1
+12/14/2023 02:33:25 AM : SECURITY - User registration [toby@gmail.com, 127.0.0.1]
+12/14/2023 02:33:37 AM : SECURITY - Logout [2, toby@gmail.com, 127.0.0.1
+12/14/2023 02:34:43 AM : SECURITY - User registration [toby@email.com, 127.0.0.1]
